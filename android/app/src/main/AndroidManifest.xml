@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.embbed_vimeo_playground">
-   <application
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <application
         android:label="embbed_vimeo_playground"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
