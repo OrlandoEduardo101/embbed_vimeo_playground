@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
-import 'vimeo_video.dart';
+import '../vimeo_video.dart';
 
 /// Vimeo player.
 class VimeoPlayer extends StatefulWidget {

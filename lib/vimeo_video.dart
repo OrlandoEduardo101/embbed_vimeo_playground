@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import 'vimeo_error.dart';
+import 'vimeo/vimeo_error.dart';
 
 class VimeoVideo {
   final bool liveEvent;
@@ -45,6 +45,8 @@ class VimeoVideo {
   final Play? transcode;
   final bool? isPlayable;
   final bool? hasAudio;
+  final List<Download>? files;
+  final List<Download>? download;
 
   VimeoVideo({
     this.liveEvent = false,
@@ -87,6 +89,8 @@ class VimeoVideo {
     this.transcode,
     this.isPlayable,
     this.hasAudio,
+    this.files,
+    this.download,
   });
 
   static Future<VimeoVideo> fromJsonVideoWithAuth({
@@ -141,89 +145,93 @@ class VimeoVideo {
   }
 
   VimeoVideo copyWith({
-      bool? liveEvent,
-      List<_VimeoQualityFile?>? sources,
-        String? uri,
-        String? name,
-        dynamic description,
-        String? type,
-        String? link,
-        String? playerEmbedUrl,
-        int? duration,
-        int? width,
-        dynamic language,
-        int? height,
-        Embed? embed,
-        DateTime? createdTime,
-        DateTime? modifiedTime,
-        DateTime? releaseTime,
-        List<String>? contentRating,
-        String? contentRatingClass,
-        bool? ratingModLocked,
-        dynamic license,
-        Privacy? privacy,
-        Pictures? pictures,
-        List<dynamic>? tags,
-        Stats? stats,
-        List<dynamic>? categories,
-        Uploader? uploader,
-        VimeoVideoMetadata? metadata,
-        String? manageLink,
-        User? user,
-        dynamic parentFolder,
-        DateTime? lastUserActionEventDate,
-        ReviewPage? reviewPage,
-        Play? play,
-        App? app,
-        String? status,
-        String? resourceKey,
-        Upload? upload,
-        Play? transcode,
-        bool? isPlayable,
-        bool? hasAudio,
-    }) => 
-        VimeoVideo(
-            sources: sources ?? this.sources,
-            liveEvent: liveEvent ?? this.liveEvent,
-            uri: uri ?? this.uri,
-            name: name ?? this.name,
-            description: description ?? this.description,
-            type: type ?? this.type,
-            link: link ?? this.link,
-            playerEmbedUrl: playerEmbedUrl ?? this.playerEmbedUrl,
-            duration: duration ?? this.duration,
-            width: width ?? this.width,
-            language: language ?? this.language,
-            height: height ?? this.height,
-            embed: embed ?? this.embed,
-            createdTime: createdTime ?? this.createdTime,
-            modifiedTime: modifiedTime ?? this.modifiedTime,
-            releaseTime: releaseTime ?? this.releaseTime,
-            contentRating: contentRating ?? this.contentRating,
-            contentRatingClass: contentRatingClass ?? this.contentRatingClass,
-            ratingModLocked: ratingModLocked ?? this.ratingModLocked,
-            license: license ?? this.license,
-            privacy: privacy ?? this.privacy,
-            pictures: pictures ?? this.pictures,
-            tags: tags ?? this.tags,
-            stats: stats ?? this.stats,
-            categories: categories ?? this.categories,
-            uploader: uploader ?? this.uploader,
-            metadata: metadata ?? this.metadata,
-            manageLink: manageLink ?? this.manageLink,
-            user: user ?? this.user,
-            parentFolder: parentFolder ?? this.parentFolder,
-            lastUserActionEventDate: lastUserActionEventDate ?? this.lastUserActionEventDate,
-            reviewPage: reviewPage ?? this.reviewPage,
-            play: play ?? this.play,
-            app: app ?? this.app,
-            status: status ?? this.status,
-            resourceKey: resourceKey ?? this.resourceKey,
-            upload: upload ?? this.upload,
-            transcode: transcode ?? this.transcode,
-            isPlayable: isPlayable ?? this.isPlayable,
-            hasAudio: hasAudio ?? this.hasAudio,
-        );
+    bool? liveEvent,
+    List<_VimeoQualityFile?>? sources,
+    String? uri,
+    String? name,
+    dynamic description,
+    String? type,
+    String? link,
+    String? playerEmbedUrl,
+    int? duration,
+    int? width,
+    dynamic language,
+    int? height,
+    Embed? embed,
+    DateTime? createdTime,
+    DateTime? modifiedTime,
+    DateTime? releaseTime,
+    List<String>? contentRating,
+    String? contentRatingClass,
+    bool? ratingModLocked,
+    dynamic license,
+    Privacy? privacy,
+    Pictures? pictures,
+    List<dynamic>? tags,
+    Stats? stats,
+    List<dynamic>? categories,
+    Uploader? uploader,
+    VimeoVideoMetadata? metadata,
+    String? manageLink,
+    User? user,
+    dynamic parentFolder,
+    DateTime? lastUserActionEventDate,
+    ReviewPage? reviewPage,
+    Play? play,
+    App? app,
+    String? status,
+    String? resourceKey,
+    Upload? upload,
+    Play? transcode,
+    bool? isPlayable,
+    bool? hasAudio,
+    List<Download>? files,
+    List<Download>? download,
+  }) =>
+      VimeoVideo(
+        sources: sources ?? this.sources,
+        liveEvent: liveEvent ?? this.liveEvent,
+        uri: uri ?? this.uri,
+        name: name ?? this.name,
+        description: description ?? this.description,
+        type: type ?? this.type,
+        link: link ?? this.link,
+        playerEmbedUrl: playerEmbedUrl ?? this.playerEmbedUrl,
+        duration: duration ?? this.duration,
+        width: width ?? this.width,
+        language: language ?? this.language,
+        height: height ?? this.height,
+        embed: embed ?? this.embed,
+        createdTime: createdTime ?? this.createdTime,
+        modifiedTime: modifiedTime ?? this.modifiedTime,
+        releaseTime: releaseTime ?? this.releaseTime,
+        contentRating: contentRating ?? this.contentRating,
+        contentRatingClass: contentRatingClass ?? this.contentRatingClass,
+        ratingModLocked: ratingModLocked ?? this.ratingModLocked,
+        license: license ?? this.license,
+        privacy: privacy ?? this.privacy,
+        pictures: pictures ?? this.pictures,
+        tags: tags ?? this.tags,
+        stats: stats ?? this.stats,
+        categories: categories ?? this.categories,
+        uploader: uploader ?? this.uploader,
+        metadata: metadata ?? this.metadata,
+        manageLink: manageLink ?? this.manageLink,
+        user: user ?? this.user,
+        parentFolder: parentFolder ?? this.parentFolder,
+        lastUserActionEventDate: lastUserActionEventDate ?? this.lastUserActionEventDate,
+        reviewPage: reviewPage ?? this.reviewPage,
+        play: play ?? this.play,
+        app: app ?? this.app,
+        status: status ?? this.status,
+        resourceKey: resourceKey ?? this.resourceKey,
+        upload: upload ?? this.upload,
+        transcode: transcode ?? this.transcode,
+        isPlayable: isPlayable ?? this.isPlayable,
+        hasAudio: hasAudio ?? this.hasAudio,
+        files: files ?? this.files,
+        download: download ?? this.download,
+      );
 
   static VimeoVideo fromJson(Map<String, dynamic> json) => VimeoVideo(
         sources: [],
@@ -267,6 +275,9 @@ class VimeoVideo {
         transcode: json["transcode"] == null ? null : Play.fromJson(json["transcode"]),
         isPlayable: json["is_playable"],
         hasAudio: json["has_audio"],
+        files: json["files"] == null ? [] : List<Download>.from(json["files"]!.map((x) => Download.fromJson(x))),
+        download:
+            json["download"] == null ? [] : List<Download>.from(json["download"]!.map((x) => Download.fromJson(x))),
       );
 
   static Future<VimeoVideo> fromJsonVideoWithoutAuth(Map<String, dynamic> json) async {
@@ -439,6 +450,101 @@ class App {
       };
 }
 
+class Download {
+  Download({
+    this.quality,
+    this.rendition,
+    this.type,
+    this.width,
+    this.height,
+    this.expires,
+    this.link,
+    this.createdTime,
+    this.fps,
+    this.size,
+    this.md5,
+    this.publicName,
+    this.sizeShort,
+  });
+
+  final String? quality;
+  final String? rendition;
+  final String? type;
+  final int? width;
+  final int? height;
+  final DateTime? expires;
+  final String? link;
+  final DateTime? createdTime;
+  final double? fps;
+  final int? size;
+  final dynamic md5;
+  final String? publicName;
+  final String? sizeShort;
+
+  Download copyWith({
+    String? quality,
+    String? rendition,
+    String? type,
+    int? width,
+    int? height,
+    DateTime? expires,
+    String? link,
+    DateTime? createdTime,
+    double? fps,
+    int? size,
+    dynamic md5,
+    String? publicName,
+    String? sizeShort,
+  }) =>
+      Download(
+        quality: quality ?? this.quality,
+        rendition: rendition ?? this.rendition,
+        type: type ?? this.type,
+        width: width ?? this.width,
+        height: height ?? this.height,
+        expires: expires ?? this.expires,
+        link: link ?? this.link,
+        createdTime: createdTime ?? this.createdTime,
+        fps: fps ?? this.fps,
+        size: size ?? this.size,
+        md5: md5 ?? this.md5,
+        publicName: publicName ?? this.publicName,
+        sizeShort: sizeShort ?? this.sizeShort,
+      );
+
+  factory Download.fromJson(Map<String, dynamic> json) => Download(
+        quality: json["quality"],
+        rendition: json["rendition"],
+        type: json["type"],
+        width: json["width"],
+        height: json["height"],
+        expires: json["expires"] == null ? null : DateTime.parse(json["expires"]),
+        link: json["link"],
+        createdTime: json["created_time"] == null ? null : DateTime.parse(json["created_time"]),
+        fps: json["fps"],
+        size: json["size"],
+        md5: json["md5"],
+        publicName: json["public_name"],
+        sizeShort: json["size_short"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "quality": quality,
+        "rendition": rendition,
+        "type": type,
+        "width": width,
+        "height": height,
+        "expires": expires?.toIso8601String(),
+        "link": link,
+        "created_time": createdTime?.toIso8601String(),
+        "fps": fps,
+        "size": size,
+        "md5": md5,
+        "public_name": publicName,
+        "size_short": sizeShort,
+      };
+}
+
 class Embed {
   Embed({
     this.html,
@@ -452,6 +558,7 @@ class Embed {
     this.autopip,
     this.volume,
     this.color,
+    this.colors,
     this.eventSchedule,
     this.interactive,
     this.hasCards,
@@ -466,17 +573,18 @@ class Embed {
   final Buttons? buttons;
   final Logos? logos;
   final Title? title;
-  final List<dynamic>? endScreen;
+  final EndScreen? endScreen;
   final bool? playbar;
   final bool? pip;
   final bool? autopip;
   final bool? volume;
   final String? color;
+  final ColorsVimeo? colors;
   final bool? eventSchedule;
   final bool? interactive;
   final bool? hasCards;
   final String? outroType;
-  final dynamic uri;
+  final String? uri;
   final dynamic emailCaptureForm;
   final bool? speed;
 
@@ -486,17 +594,18 @@ class Embed {
     Buttons? buttons,
     Logos? logos,
     Title? title,
-    List<dynamic>? endScreen,
+    EndScreen? endScreen,
     bool? playbar,
     bool? pip,
     bool? autopip,
     bool? volume,
     String? color,
+    ColorsVimeo? colors,
     bool? eventSchedule,
     bool? interactive,
     bool? hasCards,
     String? outroType,
-    dynamic uri,
+    String? uri,
     dynamic emailCaptureForm,
     bool? speed,
   }) =>
@@ -512,6 +621,7 @@ class Embed {
         autopip: autopip ?? this.autopip,
         volume: volume ?? this.volume,
         color: color ?? this.color,
+        colors: colors ?? this.colors,
         eventSchedule: eventSchedule ?? this.eventSchedule,
         interactive: interactive ?? this.interactive,
         hasCards: hasCards ?? this.hasCards,
@@ -527,12 +637,13 @@ class Embed {
         buttons: json["buttons"] == null ? null : Buttons.fromJson(json["buttons"]),
         logos: json["logos"] == null ? null : Logos.fromJson(json["logos"]),
         title: json["title"] == null ? null : Title.fromJson(json["title"]),
-        endScreen: json["end_screen"] == null ? [] : List<dynamic>.from(json["end_screen"]!.map((x) => x)),
+        endScreen: json["end_screen"] == null ? null : EndScreen.fromJson(json["end_screen"]),
         playbar: json["playbar"],
         pip: json["pip"],
         autopip: json["autopip"],
         volume: json["volume"],
         color: json["color"],
+        colors: json["colors"] == null ? null : ColorsVimeo.fromJson(json["colors"]),
         eventSchedule: json["event_schedule"],
         interactive: json["interactive"],
         hasCards: json["has_cards"],
@@ -548,12 +659,13 @@ class Embed {
         "buttons": buttons?.toJson(),
         "logos": logos?.toJson(),
         "title": title?.toJson(),
-        "end_screen": endScreen == null ? [] : List<dynamic>.from(endScreen!.map((x) => x)),
+        "end_screen": endScreen?.toJson(),
         "playbar": playbar,
         "pip": pip,
         "autopip": autopip,
         "volume": volume,
         "color": color,
+        "colors": colors?.toJson(),
         "event_schedule": eventSchedule,
         "interactive": interactive,
         "has_cards": hasCards,
@@ -740,6 +852,70 @@ class Buttons {
       };
 }
 
+class ColorsVimeo {
+  ColorsVimeo({
+    this.colorOne,
+    this.colorTwo,
+    this.colorThree,
+    this.colorFour,
+  });
+
+  final String? colorOne;
+  final String? colorTwo;
+  final String? colorThree;
+  final String? colorFour;
+
+  ColorsVimeo copyWith({
+    String? colorOne,
+    String? colorTwo,
+    String? colorThree,
+    String? colorFour,
+  }) =>
+      ColorsVimeo(
+        colorOne: colorOne ?? this.colorOne,
+        colorTwo: colorTwo ?? this.colorTwo,
+        colorThree: colorThree ?? this.colorThree,
+        colorFour: colorFour ?? this.colorFour,
+      );
+
+  factory ColorsVimeo.fromJson(Map<String, dynamic> json) => ColorsVimeo(
+        colorOne: json["color_one"],
+        colorTwo: json["color_two"],
+        colorThree: json["color_three"],
+        colorFour: json["color_four"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "color_one": colorOne,
+        "color_two": colorTwo,
+        "color_three": colorThree,
+        "color_four": colorFour,
+      };
+}
+
+class EndScreen {
+  EndScreen({
+    this.type,
+  });
+
+  final String? type;
+
+  EndScreen copyWith({
+    String? type,
+  }) =>
+      EndScreen(
+        type: type ?? this.type,
+      );
+
+  factory EndScreen.fromJson(Map<String, dynamic> json) => EndScreen(
+        type: json["type"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "type": type,
+      };
+}
+
 class Logos {
   Logos({
     this.vimeo,
@@ -903,7 +1079,6 @@ class PurpleConnections {
     this.recommendations,
     this.albums,
     this.availableAlbums,
-    this.availableChannels,
     this.versions,
   });
 
@@ -916,7 +1091,6 @@ class PurpleConnections {
   final Recommendations? recommendations;
   final Albums? albums;
   final Albums? availableAlbums;
-  final Albums? availableChannels;
   final Versions? versions;
 
   PurpleConnections copyWith({
@@ -929,7 +1103,6 @@ class PurpleConnections {
     Recommendations? recommendations,
     Albums? albums,
     Albums? availableAlbums,
-    Albums? availableChannels,
     Versions? versions,
   }) =>
       PurpleConnections(
@@ -942,7 +1115,6 @@ class PurpleConnections {
         recommendations: recommendations ?? this.recommendations,
         albums: albums ?? this.albums,
         availableAlbums: availableAlbums ?? this.availableAlbums,
-        availableChannels: availableChannels ?? this.availableChannels,
         versions: versions ?? this.versions,
       );
 
@@ -956,7 +1128,6 @@ class PurpleConnections {
         recommendations: json["recommendations"] == null ? null : Recommendations.fromJson(json["recommendations"]),
         albums: json["albums"] == null ? null : Albums.fromJson(json["albums"]),
         availableAlbums: json["available_albums"] == null ? null : Albums.fromJson(json["available_albums"]),
-        availableChannels: json["available_channels"] == null ? null : Albums.fromJson(json["available_channels"]),
         versions: json["versions"] == null ? null : Versions.fromJson(json["versions"]),
       );
 
@@ -970,7 +1141,6 @@ class PurpleConnections {
         "recommendations": recommendations?.toJson(),
         "albums": albums?.toJson(),
         "available_albums": availableAlbums?.toJson(),
-        "available_channels": availableChannels?.toJson(),
         "versions": versions?.toJson(),
       };
 }
@@ -1185,12 +1355,12 @@ class Edit {
 
   final String? uri;
   final List<Option>? options;
-  final List<String>? blockedFields;
+  final List<dynamic>? blockedFields;
 
   Edit copyWith({
     String? uri,
     List<Option>? options,
-    List<String>? blockedFields,
+    List<dynamic>? blockedFields,
   }) =>
       Edit(
         uri: uri ?? this.uri,
@@ -1201,7 +1371,7 @@ class Edit {
   factory Edit.fromJson(Map<String, dynamic> json) => Edit(
         uri: json["uri"],
         options: json["options"] == null ? [] : List<Option>.from(json["options"]!.map((x) => optionValues.map[x]!)),
-        blockedFields: json["blocked_fields"] == null ? [] : List<String>.from(json["blocked_fields"]!.map((x) => x)),
+        blockedFields: json["blocked_fields"] == null ? [] : List<dynamic>.from(json["blocked_fields"]!.map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
@@ -1501,24 +1671,150 @@ class Size {
 
 class Play {
   Play({
+    this.progressive,
+    this.hls,
+    this.dash,
     this.status,
   });
 
+  final List<Progressive>? progressive;
+  final Dash? hls;
+  final Dash? dash;
   final String? status;
 
   Play copyWith({
+    List<Progressive>? progressive,
+    Dash? hls,
+    Dash? dash,
     String? status,
   }) =>
       Play(
+        progressive: progressive ?? this.progressive,
+        hls: hls ?? this.hls,
+        dash: dash ?? this.dash,
         status: status ?? this.status,
       );
 
   factory Play.fromJson(Map<String, dynamic> json) => Play(
+        progressive: json["progressive"] == null
+            ? []
+            : List<Progressive>.from(json["progressive"]!.map((x) => Progressive.fromJson(x))),
+        hls: json["hls"] == null ? null : Dash.fromJson(json["hls"]),
+        dash: json["dash"] == null ? null : Dash.fromJson(json["dash"]),
         status: json["status"],
       );
 
   Map<String, dynamic> toJson() => {
+        "progressive": progressive == null ? [] : List<dynamic>.from(progressive!.map((x) => x.toJson())),
+        "hls": hls?.toJson(),
+        "dash": dash?.toJson(),
         "status": status,
+      };
+}
+
+class Dash {
+  Dash({
+    this.linkExpirationTime,
+    this.link,
+  });
+
+  final DateTime? linkExpirationTime;
+  final String? link;
+
+  Dash copyWith({
+    DateTime? linkExpirationTime,
+    String? link,
+  }) =>
+      Dash(
+        linkExpirationTime: linkExpirationTime ?? this.linkExpirationTime,
+        link: link ?? this.link,
+      );
+
+  factory Dash.fromJson(Map<String, dynamic> json) => Dash(
+        linkExpirationTime: json["link_expiration_time"] == null ? null : DateTime.parse(json["link_expiration_time"]),
+        link: json["link"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "link_expiration_time": linkExpirationTime?.toIso8601String(),
+        "link": link,
+      };
+}
+
+class Progressive {
+  Progressive({
+    this.type,
+    this.codec,
+    this.width,
+    this.height,
+    this.linkExpirationTime,
+    this.link,
+    this.createdTime,
+    this.fps,
+    this.size,
+    this.md5,
+  });
+
+  final String? type;
+  final String? codec;
+  final int? width;
+  final int? height;
+  final DateTime? linkExpirationTime;
+  final String? link;
+  final DateTime? createdTime;
+  final double? fps;
+  final int? size;
+  final dynamic md5;
+
+  Progressive copyWith({
+    String? type,
+    String? codec,
+    int? width,
+    int? height,
+    DateTime? linkExpirationTime,
+    String? link,
+    DateTime? createdTime,
+    double? fps,
+    int? size,
+    dynamic md5,
+  }) =>
+      Progressive(
+        type: type ?? this.type,
+        codec: codec ?? this.codec,
+        width: width ?? this.width,
+        height: height ?? this.height,
+        linkExpirationTime: linkExpirationTime ?? this.linkExpirationTime,
+        link: link ?? this.link,
+        createdTime: createdTime ?? this.createdTime,
+        fps: fps ?? this.fps,
+        size: size ?? this.size,
+        md5: md5 ?? this.md5,
+      );
+
+  factory Progressive.fromJson(Map<String, dynamic> json) => Progressive(
+        type: json["type"],
+        codec: json["codec"],
+        width: json["width"],
+        height: json["height"],
+        linkExpirationTime: json["link_expiration_time"] == null ? null : DateTime.parse(json["link_expiration_time"]),
+        link: json["link"],
+        createdTime: json["created_time"] == null ? null : DateTime.parse(json["created_time"]),
+        fps: json["fps"],
+        size: json["size"],
+        md5: json["md5"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "type": type,
+        "codec": codec,
+        "width": width,
+        "height": height,
+        "link_expiration_time": linkExpirationTime?.toIso8601String(),
+        "link": link,
+        "created_time": createdTime?.toIso8601String(),
+        "fps": fps,
+        "size": size,
+        "md5": md5,
       };
 }
 
@@ -1633,6 +1929,29 @@ class Stats {
       };
 }
 
+class Transcode {
+  Transcode({
+    this.status,
+  });
+
+  final String? status;
+
+  Transcode copyWith({
+    String? status,
+  }) =>
+      Transcode(
+        status: status ?? this.status,
+      );
+
+  factory Transcode.fromJson(Map<String, dynamic> json) => Transcode(
+        status: json["status"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "status": status,
+      };
+}
+
 class Upload {
   Upload({
     this.status,
@@ -1741,7 +2060,6 @@ class User {
     this.canWorkRemotely,
     this.preferences,
     this.contentFilter,
-    this.uploadQuota,
     this.resourceKey,
     this.account,
   });
@@ -1752,11 +2070,11 @@ class User {
   final Capabilities? capabilities;
   final String? location;
   final String? gender;
-  final dynamic bio;
-  final dynamic shortBio;
+  final String? bio;
+  final String? shortBio;
   final DateTime? createdTime;
   final Pictures? pictures;
-  final List<dynamic>? websites;
+  final List<Website>? websites;
   final UserMetadata? metadata;
   final LocationDetails? locationDetails;
   final List<dynamic>? skills;
@@ -1764,7 +2082,6 @@ class User {
   final bool? canWorkRemotely;
   final Preferences? preferences;
   final List<String>? contentFilter;
-  final UploadQuota? uploadQuota;
   final String? resourceKey;
   final String? account;
 
@@ -1775,11 +2092,11 @@ class User {
     Capabilities? capabilities,
     String? location,
     String? gender,
-    dynamic bio,
-    dynamic shortBio,
+    String? bio,
+    String? shortBio,
     DateTime? createdTime,
     Pictures? pictures,
-    List<dynamic>? websites,
+    List<Website>? websites,
     UserMetadata? metadata,
     LocationDetails? locationDetails,
     List<dynamic>? skills,
@@ -1787,7 +2104,6 @@ class User {
     bool? canWorkRemotely,
     Preferences? preferences,
     List<String>? contentFilter,
-    UploadQuota? uploadQuota,
     String? resourceKey,
     String? account,
   }) =>
@@ -1810,7 +2126,6 @@ class User {
         canWorkRemotely: canWorkRemotely ?? this.canWorkRemotely,
         preferences: preferences ?? this.preferences,
         contentFilter: contentFilter ?? this.contentFilter,
-        uploadQuota: uploadQuota ?? this.uploadQuota,
         resourceKey: resourceKey ?? this.resourceKey,
         account: account ?? this.account,
       );
@@ -1826,7 +2141,7 @@ class User {
         shortBio: json["short_bio"],
         createdTime: json["created_time"] == null ? null : DateTime.parse(json["created_time"]),
         pictures: json["pictures"] == null ? null : Pictures.fromJson(json["pictures"]),
-        websites: json["websites"] == null ? [] : List<dynamic>.from(json["websites"]!.map((x) => x)),
+        websites: json["websites"] == null ? [] : List<Website>.from(json["websites"]!.map((x) => Website.fromJson(x))),
         metadata: json["metadata"] == null ? null : UserMetadata.fromJson(json["metadata"]),
         locationDetails: json["location_details"] == null ? null : LocationDetails.fromJson(json["location_details"]),
         skills: json["skills"] == null ? [] : List<dynamic>.from(json["skills"]!.map((x) => x)),
@@ -1834,7 +2149,6 @@ class User {
         canWorkRemotely: json["can_work_remotely"],
         preferences: json["preferences"] == null ? null : Preferences.fromJson(json["preferences"]),
         contentFilter: json["content_filter"] == null ? [] : List<String>.from(json["content_filter"]!.map((x) => x)),
-        uploadQuota: json["upload_quota"] == null ? null : UploadQuota.fromJson(json["upload_quota"]),
         resourceKey: json["resource_key"],
         account: json["account"],
       );
@@ -1850,7 +2164,7 @@ class User {
         "short_bio": shortBio,
         "created_time": createdTime?.toIso8601String(),
         "pictures": pictures?.toJson(),
-        "websites": websites == null ? [] : List<dynamic>.from(websites!.map((x) => x)),
+        "websites": websites == null ? [] : List<dynamic>.from(websites!.map((x) => x.toJson())),
         "metadata": metadata?.toJson(),
         "location_details": locationDetails?.toJson(),
         "skills": skills == null ? [] : List<dynamic>.from(skills!.map((x) => x)),
@@ -1858,7 +2172,6 @@ class User {
         "can_work_remotely": canWorkRemotely,
         "preferences": preferences?.toJson(),
         "content_filter": contentFilter == null ? [] : List<dynamic>.from(contentFilter!.map((x) => x)),
-        "upload_quota": uploadQuota?.toJson(),
         "resource_key": resourceKey,
         "account": account,
       };
@@ -1920,27 +2233,27 @@ class LocationDetails {
   });
 
   final String? formattedAddress;
-  final dynamic latitude;
-  final dynamic longitude;
-  final dynamic city;
-  final dynamic state;
+  final double? latitude;
+  final double? longitude;
+  final String? city;
+  final String? state;
   final dynamic neighborhood;
   final dynamic subLocality;
-  final dynamic stateIsoCode;
-  final dynamic country;
-  final dynamic countryIsoCode;
+  final String? stateIsoCode;
+  final String? country;
+  final String? countryIsoCode;
 
   LocationDetails copyWith({
     String? formattedAddress,
-    dynamic latitude,
-    dynamic longitude,
-    dynamic city,
-    dynamic state,
+    double? latitude,
+    double? longitude,
+    String? city,
+    String? state,
     dynamic neighborhood,
     dynamic subLocality,
-    dynamic stateIsoCode,
-    dynamic country,
-    dynamic countryIsoCode,
+    String? stateIsoCode,
+    String? country,
+    String? countryIsoCode,
   }) =>
       LocationDetails(
         formattedAddress: formattedAddress ?? this.formattedAddress,
@@ -1957,8 +2270,8 @@ class LocationDetails {
 
   factory LocationDetails.fromJson(Map<String, dynamic> json) => LocationDetails(
         formattedAddress: json["formatted_address"],
-        latitude: json["latitude"],
-        longitude: json["longitude"],
+        latitude: json["latitude"]?.toDouble(),
+        longitude: json["longitude"]?.toDouble(),
         city: json["city"],
         state: json["state"],
         neighborhood: json["neighborhood"],
@@ -2027,6 +2340,7 @@ class FluffyConnections {
     this.foldersRoot,
     this.folders,
     this.teams,
+    this.permissionPolicies,
     this.block,
   });
 
@@ -2050,6 +2364,7 @@ class FluffyConnections {
   final Recommendations? foldersRoot;
   final Albums? folders;
   final Albums? teams;
+  final Albums? permissionPolicies;
   final Albums? block;
 
   FluffyConnections copyWith({
@@ -2073,6 +2388,7 @@ class FluffyConnections {
     Recommendations? foldersRoot,
     Albums? folders,
     Albums? teams,
+    Albums? permissionPolicies,
     Albums? block,
   }) =>
       FluffyConnections(
@@ -2096,6 +2412,7 @@ class FluffyConnections {
         foldersRoot: foldersRoot ?? this.foldersRoot,
         folders: folders ?? this.folders,
         teams: teams ?? this.teams,
+        permissionPolicies: permissionPolicies ?? this.permissionPolicies,
         block: block ?? this.block,
       );
 
@@ -2120,6 +2437,7 @@ class FluffyConnections {
         foldersRoot: json["folders_root"] == null ? null : Recommendations.fromJson(json["folders_root"]),
         folders: json["folders"] == null ? null : Albums.fromJson(json["folders"]),
         teams: json["teams"] == null ? null : Albums.fromJson(json["teams"]),
+        permissionPolicies: json["permission_policies"] == null ? null : Albums.fromJson(json["permission_policies"]),
         block: json["block"] == null ? null : Albums.fromJson(json["block"]),
       );
 
@@ -2144,6 +2462,7 @@ class FluffyConnections {
         "folders_root": foldersRoot?.toJson(),
         "folders": folders?.toJson(),
         "teams": teams?.toJson(),
+        "permission_policies": permissionPolicies?.toJson(),
         "block": block?.toJson(),
       };
 }
@@ -2212,138 +2531,50 @@ class Videos {
       };
 }
 
-class UploadQuota {
-  UploadQuota({
-    this.space,
-    this.periodic,
-    this.lifetime,
+class Website {
+  Website({
+    this.uri,
+    this.name,
+    this.link,
+    this.type,
+    this.description,
   });
 
-  final Lifetime? space;
-  final Periodic? periodic;
-  final Lifetime? lifetime;
+  final String? uri;
+  final String? name;
+  final String? link;
+  final String? type;
+  final String? description;
 
-  UploadQuota copyWith({
-    Lifetime? space,
-    Periodic? periodic,
-    Lifetime? lifetime,
+  Website copyWith({
+    String? uri,
+    String? name,
+    String? link,
+    String? type,
+    String? description,
   }) =>
-      UploadQuota(
-        space: space ?? this.space,
-        periodic: periodic ?? this.periodic,
-        lifetime: lifetime ?? this.lifetime,
+      Website(
+        uri: uri ?? this.uri,
+        name: name ?? this.name,
+        link: link ?? this.link,
+        type: type ?? this.type,
+        description: description ?? this.description,
       );
 
-  factory UploadQuota.fromJson(Map<String, dynamic> json) => UploadQuota(
-        space: json["space"] == null ? null : Lifetime.fromJson(json["space"]),
-        periodic: json["periodic"] == null ? null : Periodic.fromJson(json["periodic"]),
-        lifetime: json["lifetime"] == null ? null : Lifetime.fromJson(json["lifetime"]),
+  factory Website.fromJson(Map<String, dynamic> json) => Website(
+        uri: json["uri"],
+        name: json["name"],
+        link: json["link"],
+        type: json["type"],
+        description: json["description"],
       );
 
   Map<String, dynamic> toJson() => {
-        "space": space?.toJson(),
-        "periodic": periodic?.toJson(),
-        "lifetime": lifetime?.toJson(),
-      };
-}
-
-class Lifetime {
-  Lifetime({
-    this.unit,
-    this.free,
-    this.max,
-    this.used,
-    this.showing,
-  });
-
-  final String? unit;
-  final int? free;
-  final int? max;
-  final int? used;
-  final String? showing;
-
-  Lifetime copyWith({
-    String? unit,
-    int? free,
-    int? max,
-    int? used,
-    String? showing,
-  }) =>
-      Lifetime(
-        unit: unit ?? this.unit,
-        free: free ?? this.free,
-        max: max ?? this.max,
-        used: used ?? this.used,
-        showing: showing ?? this.showing,
-      );
-
-  factory Lifetime.fromJson(Map<String, dynamic> json) => Lifetime(
-        unit: json["unit"],
-        free: json["free"],
-        max: json["max"],
-        used: json["used"],
-        showing: json["showing"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "unit": unit,
-        "free": free,
-        "max": max,
-        "used": used,
-        "showing": showing,
-      };
-}
-
-class Periodic {
-  Periodic({
-    this.period,
-    this.unit,
-    this.free,
-    this.max,
-    this.used,
-    this.resetDate,
-  });
-
-  final String? period;
-  final String? unit;
-  final int? free;
-  final int? max;
-  final int? used;
-  final DateTime? resetDate;
-
-  Periodic copyWith({
-    String? period,
-    String? unit,
-    int? free,
-    int? max,
-    int? used,
-    DateTime? resetDate,
-  }) =>
-      Periodic(
-        period: period ?? this.period,
-        unit: unit ?? this.unit,
-        free: free ?? this.free,
-        max: max ?? this.max,
-        used: used ?? this.used,
-        resetDate: resetDate ?? this.resetDate,
-      );
-
-  factory Periodic.fromJson(Map<String, dynamic> json) => Periodic(
-        period: json["period"],
-        unit: json["unit"],
-        free: json["free"],
-        max: json["max"],
-        used: json["used"],
-        resetDate: json["reset_date"] == null ? null : DateTime.parse(json["reset_date"]),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "period": period,
-        "unit": unit,
-        "free": free,
-        "max": max,
-        "used": used,
-        "reset_date": resetDate?.toIso8601String(),
+        "uri": uri,
+        "name": name,
+        "link": link,
+        "type": type,
+        "description": description,
       };
 }
 

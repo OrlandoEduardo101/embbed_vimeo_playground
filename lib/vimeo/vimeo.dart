@@ -1,6 +1,6 @@
 import 'package:embbed_vimeo_playground/vimeo/data/remote/auth_api_service.dart';
 import 'package:embbed_vimeo_playground/vimeo/data/remote/none_auth_api_service.dart';
-import 'package:embbed_vimeo_playground/vimeo/vimeo_video.dart';
+import 'package:embbed_vimeo_playground/vimeo_video.dart';
 
 /// Vimeo Class provides functions to get vimeo data.
 class Vimeo {

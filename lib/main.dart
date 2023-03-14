@@ -1,10 +1,8 @@
-import 'package:embbed_vimeo_playground/video_player.dart';
-import 'package:embbed_vimeo_playground/vimeo/vimeo.dart';
 import 'package:embbed_vimeo_playground/vimeo/vimeo_error.dart';
 import 'package:flutter/material.dart';
 import 'package:uno/uno.dart';
-
-import 'vimeo/vimeo_video.dart';
+import 'video_player.dart';
+import 'vimeo_video.dart';
 
 void main() {
   runApp(const MyApp());
@@ -42,33 +40,34 @@ class _MyHomePageState extends State<MyHomePage> {
   final perssonalAccesToken = '';
   String urlVideo = '';
 
-  // Future<void> _incrementCounter() async {
-  //   final url = 'https://vimeo.com/$videoId';
-  //   final headers = {'authorization': 'bearer $perssonalAccesToken'};
-  //   final response = await Uno(baseURL: '').get(url, headers: headers);
-  //   setState(() {
-  //     urlVideo = response.toString();
-  //   });
-  // }
-
   VimeoVideo? vimeoVideo;
 
   Future<dynamic> initVimeo() async {
-    var res = await Vimeo.fromUrl(
-      Uri.parse('https://vimeo.com/video/$videoId'),
-      accessKey: perssonalAccesToken,
-    ).load;
+    try {
+      // var res = await Vimeo.fromUrl(
+      //   Uri.parse('https://vimeo.com/video/$videoId'),
+      //   accessKey: perssonalAccesToken,
+      // ).load;
 
-    if (res is VimeoError) {
-      return res;
+      final url = '/me/videos/$videoId';
+      final headers = {'authorization': 'bearer $perssonalAccesToken'};
+      final response = await Uno(baseURL: 'https://api.vimeo.com').get(url, headers: headers);
+
+      final video = VimeoVideo.fromJson(response.data);
+
+      if (video is VimeoError) {
+        return video;
+      }
+
+      // ignore: unnecessary_type_check
+      if (video is VimeoVideo) {
+        vimeoVideo = video;
+      }
+
+      return vimeoVideo;
+    } catch (e) {
+      return VimeoError(error: e.toString());
     }
-
-    bool autoPlay = false;
-    if (res is VimeoVideo) {
-      vimeoVideo = res;
-    }
-
-    return vimeoVideo;
   }
 
   @override
@@ -83,11 +82,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    //
-    // _incrementCounter();
-
-    // if (urlVideo.isEmpty) return Container();
-
     return Scaffold(
         appBar: AppBar(toolbarHeight: 0),
         body: Stack(alignment: Alignment.topCenter, children: [
@@ -97,9 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
               if (!snapshot.hasData) {
                 return Container(
                     decoration: BoxDecoration(border: Border.all(color: Colors.grey.shade700)),
-                    child: AspectRatio(
-                        aspectRatio: 16 / 9,
-                        child: Container(child: const Center(child: CircularProgressIndicator()))));
+                    child: const AspectRatio(aspectRatio: 16 / 9, child: Center(child: CircularProgressIndicator())));
               }
 
               if (snapshot.data is VimeoError) {
@@ -121,9 +113,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               }
 
-
               return VideoPlayerWidget.fromUrl(
-                videoUrl: (snapshot.data as VimeoVideo).playerEmbedUrl.toString(),
+                videoUrl: (snapshot.data as VimeoVideo).files?.last.link.toString(),
               );
             },
           ),
@@ -140,24 +131,5 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
         ]));
-
-    // return VideoPlayerWidget.fromUrl(
-    //   videoUrl: urlVideo,
-    // );
-
-    // return WebviewScaffold(
-    //   url: "https://player.vimeo.com/video/$videoId?title=0&byline=0&portrait=0",
-    //   headers: headers,
-    //   withZoom: false,
-    //   withLocalStorage: true,
-    //   hidden: true,
-    //   debuggingEnabled: true,
-    //   initialChild: Container(
-    //     color: Colors.white,
-    //     child: const Center(
-    //       child: CircularProgressIndicator(),
-    //     ),
-    //   ),
-    // );
   }
 }
